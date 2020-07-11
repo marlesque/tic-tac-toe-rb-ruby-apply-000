@@ -3,6 +3,22 @@ def position_taken?(board, index)
   !(board[index].nil? || board[index] == " ")
 end
 
+def play(board)
+  until (over?(board))
+    if (!won?(board) && !draw?(board))
+      turn(board)
+    end
+  end
+  
+  if won?(board)
+    person_winning= winner(board)
+    puts "Congratulations #{person_winning}!"
+  end
+  if draw?(board)
+    puts "Cat's Game!" 
+  end
+end
+
 # Define your WIN_COMBINATIONS constant
 WIN_COMBINATIONS = [
   [0, 1, 2],
@@ -82,4 +98,75 @@ def winner(board)
   end
 end
 
+def turn_count(board)
+  counter = 0
+  board.each do |position|
+    if position =="X" || position == "O"
+      counter += 1
+    end
+  end
+  return counter
+end
+
+def current_player(board)
+  num = turn_count(board)
+  if (num % 2 == 1)
+    return "O"
+  else
+    return "X"
+  end
+end
+
+def valid_move?(board, index)
+  if index>8 && index <0
+    return FALSE
+  end
+  if position_taken?(board, index)
+    return FALSE
+  end
+  if !(position_taken?(board, index)) && (index<=8 && index >=0)
+    return TRUE
+  end
+    
+end
+
+def display_board(board)
+  puts " #{board[0]} | #{board[1]} | #{board[2]} "
+  puts "-----------"
+  puts " #{board[3]} | #{board[4]} | #{board[5]} "
+  puts "-----------"
+  puts " #{board[6]} | #{board[7]} | #{board[8]} "
+end
+
+def turn(board)
+  
+  puts "Please enter 1-9:"
+  input = gets.strip
+  index_num = input_to_index(input)
+  if valid_move?(board, index_num) 
+    if (turn_count(board) % 2 ==0)
+      move(board, index_num, 'X')
+      display_board(board)
+    else 
+      move(board, index_num, 'O')
+      display_board(board)
+    end
+  else
+      puts "Please enter 1-9:"
+      input = gets.strip
+      index_num = input_to_ondex(input)
+    end
+end
+
+# code your input_to_index and move method here!
+def input_to_index(str)
+  if str.to_i >= 0 && str.to_i <=8
+    return str.to_i - 1
+  end
+end
+
+def move(array, index, value)
+  array[index]= value
+  display_board(array)
+end
 
