@@ -5,12 +5,8 @@ end
 
 def play(board)
   drawTable = []
-  until (draw?(board) || won?(board))
-    
+  until (over?(board))
       turn(board)
-      
-      
-      
   end
 if won?(board)
     person_winning= winner(board)
@@ -78,17 +74,20 @@ end
 
 def over?(board)
   inprogress = board.any?{|i| i == "" || i == " " || i== nil}
+  result = FALSE
   if inprogress && (won?(board)==nil)
-    return FALSE
+    result= FALSE
   end
   
-  if (won?(board)!=nil) && !(full?(board))
-    return TRUE
+  # if (won?(board)!=nil) && !(full?(board))
+  #   return TRUE
+  # end
+  
+  if won?(board) || draw?(board)
+    result = TRUE
   end
   
-  if (won?(board)!=nil) || draw?(board) || full?(board)
-    return TRUE
-  end
+  return result
 end
 
 def winner(board)
