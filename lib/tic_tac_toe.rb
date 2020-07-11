@@ -79,10 +79,6 @@ def over?(board)
     result= FALSE
   end
   
-  # if (won?(board)!=nil) && !(full?(board))
-  #   return TRUE
-  # end
-  
   if won?(board) || draw?(board)
     result = TRUE
   end
