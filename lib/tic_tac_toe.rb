@@ -4,16 +4,18 @@ def position_taken?(board, index)
 end
 
 def play(board)
-  until (over?(board))
-    if (!won?(board) && !draw?(board))
+  drawTable = []
+  until (draw?(board) || won?(board))
+    
       turn(board)
-    end
+      
+      
+      
   end
-  
-  if won?(board)
+if won?(board)
     person_winning= winner(board)
     puts "Congratulations #{person_winning}!"
-  end
+  end  
   if draw?(board)
     puts "Cat's Game!" 
   end
@@ -75,7 +77,7 @@ def draw?(board)
 end
 
 def over?(board)
-  inprogress = board.any?{|i| i == "" || i == " "}
+  inprogress = board.any?{|i| i == "" || i == " " || i== nil}
   if inprogress && (won?(board)==nil)
     return FALSE
   end
@@ -146,15 +148,16 @@ def turn(board)
   if valid_move?(board, index_num) 
     if (turn_count(board) % 2 ==0)
       move(board, index_num, 'X')
-      display_board(board)
+      
     else 
       move(board, index_num, 'O')
-      display_board(board)
+      
     end
+    display_board(board)
   else
       puts "Please enter 1-9:"
       input = gets.strip
-      index_num = input_to_ondex(input)
+      index_num = input_to_index(input)
     end
 end
 
